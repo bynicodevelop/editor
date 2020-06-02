@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <default>
+    <editor
+            v-model="content"
+            :configs="config"
+    />
+  </default>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+data: () => ({
+  content: "",
+  config: {
+    toolbar: false,
+    status: false,
+    autofocus: true,
+    spellChecker: false
   }
-}
+})
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+$min-height : 70px
+
+.vue-simplemde
+  width: 100%
+  height: 100%
+  align-items: center
+  display: flex
+  flex-wrap: wrap
+
+  .CodeMirror
+    position: relative
+    margin: 0 auto
+    border-width: 0
+    min-height: $min-height
+    flex: 1 1 100%
+    max-width: calc(50% + 24px)
+
+  .CodeMirror-vscrollbar
+    right: 0
+    top: 0
+    overflow-x: hidden
+    overflow-y: hidden
+
+  .CodeMirror-scroll
+    min-height: $min-height
+    overflow-y: hidden!important
+    overflow-x: hidden!important
 </style>
