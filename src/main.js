@@ -2,19 +2,24 @@ import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
 
-// import CKEditor from '@ckeditor/ckeditor5-vue'
 import VueSimplemde from 'vue-simplemde'
 
+import List from './components/List'
+import TopBar from './components/TopBar'
+
 import Default from "./layouts/Default";
+import store from './store'
 
 Vue.component('default', Default)
 Vue.component('editor', VueSimplemde)
 
-// Vue.use(CKEditor)
+Vue.component('list', List)
+Vue.component('top-bar', TopBar)
 
 Vue.config.productionTip = false
 
 new Vue({
   vuetify,
+  store,
   render: h => h(App)
 }).$mount('#app')
