@@ -6,6 +6,7 @@ import VueSimplemde from 'vue-simplemde'
 
 import List from './components/List'
 import TopBar from './components/TopBar'
+import Storage from './components/Storage'
 
 import Default from "./layouts/Default";
 import store from './store'
@@ -15,6 +16,7 @@ Vue.component('editor', VueSimplemde)
 
 Vue.component('list', List)
 Vue.component('top-bar', TopBar)
+Vue.component('storage', Storage)
 
 Vue.config.productionTip = false
 

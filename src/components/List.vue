@@ -1,6 +1,11 @@
 <template>
-    <div>
-        <v-list dense>
+    <v-container
+            class="pl-0 pr-0"
+            fluid
+    >
+        <v-list
+                dense
+        >
             <template
                     v-for="(content, index) in filteredContent"
             >
@@ -15,7 +20,7 @@
                         :key="`item-${index}`"></v-divider>
             </template>
         </v-list>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -26,15 +31,10 @@
         data: () => ({
             edit: false
         }),
-        components:{
+        components: {
             'list-item': ListItem
         },
         computed: {
-            contents: {
-                get() {
-                    return this.$store.state.contents
-                }
-            },
             filteredContent() {
                 this.$store.commit("filter")
 
@@ -45,6 +45,10 @@
 </script>
 
 <style scoped lang="sass">
+    p
+        width: 100%
+        margin-bottom: 153px
+
     .list-toolbar
         z-index: 1000
         position: fixed

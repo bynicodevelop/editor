@@ -6,7 +6,9 @@
         >
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <v-list-item-title>
+                    <v-list-item-title
+                            class="text-uppercase"
+                    >
                         {{ '' || content.text.split('\n')[0].replace('# ', '') }}
                     </v-list-item-title>
                     <v-list-item-subtitle>
