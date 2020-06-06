@@ -1,21 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import contents from '../../test/data'
+// import contents from '../../test/data'
 
 Vue.use(Vuex)
 
 const getLastId = (contents) => {
     const keys = Object.keys(contents).map(i => parseInt(i))
 
+    if(!keys.length)
+        return 0
+
     return Math.max(...keys)
 }
 
 export default new Vuex.Store({
     state: {
-        changedSelection: false,
+        refresh: 0,
+        localstorageSize: 0,
         search: "",
-        contents,
+        contents: {},
         filteredContent: [],
         content: {
             text: ""
@@ -32,9 +36,12 @@ export default new Vuex.Store({
         search: state => state.search
     },
     mutations: {
+        refresh(state) {
+            state.refresh += 1
+        },
         select: function (state, value) {
             state.content = value
-            state.changedSelection = true
+            this.commit("refresh")
         },
         create(state, value = "") {
             const newId = getLastId(state.contents) + 1
@@ -47,14 +54,15 @@ export default new Vuex.Store({
             state.contents[newId.toString()] = state.content
 
             this.commit('filter', state.search)
-            state.changedSelection = true
         },
         update(state, value) {
-            if(state.content.text === "" && value !== "") {
+            if(state.content.text === "" && value !== "# ") {
                 this.commit("create", value)
             } else if(value !== "") {
                 state.content.text = value
             }
+
+            this.commit('saveInLocalStorage')
         },
         search(state, value) {
             state.search = value
@@ -64,13 +72,42 @@ export default new Vuex.Store({
                 return el.text !== undefined ? el.text.toLowerCase().includes(state.search.toLowerCase()) : false
             })
         },
-        changedSelectionToggle(state) {
-            state.changedSelection = false
-        },
         delete(state, value) {
             delete state.contents[value.id]
 
+            if(state.content.id === value.id) {
+                state.content = {
+                    text: ""
+                }
+            }
+
+            this.commit("refresh")
+
+            this.commit('saveInLocalStorage')
             this.commit('filter', state.search)
+        },
+        // LocalStorage
+        calculateLocalStorageSize(state) {
+            let total = 0,
+                len, x;
+
+            for (x in localStorage) {
+                // eslint-disable-next-line no-prototype-builtins
+                if (!localStorage.hasOwnProperty(x)) {
+                    continue;
+                }
+                len = ((localStorage[x].length + x.length) * 2);
+                total += len;
+            }
+
+            state.localstorageSize = ((total / 1024)/1000).toFixed(2)
+        },
+        loadLocalStorage(state) {
+            let contents = localStorage.getItem('contents')
+            state.contents =  contents === null ? {} : JSON.parse(contents)
+        },
+        saveInLocalStorage(state) {
+            localStorage.setItem('contents', JSON.stringify(state.contents))
         }
     },
     actions: {},

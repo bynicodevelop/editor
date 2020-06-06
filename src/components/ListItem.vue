@@ -2,11 +2,13 @@
         <v-list-item-content
                 :id="id"
                 class="swiper-container"
-                @click.stop="doSelect"
+                @click="doSelect"
         >
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <v-list-item-title>
+                    <v-list-item-title
+                            class="text-uppercase"
+                    >
                         {{ '' || content.text.split('\n')[0].replace('# ', '') }}
                     </v-list-item-title>
                     <v-list-item-subtitle>
@@ -45,11 +47,6 @@
             id: {
                 type: String
             },
-            direction: {
-                validator: value => {
-                    return ['right', 'left'].indexOf(value) !== -1
-                }
-            },
             content: {
                 type: Object
             }
@@ -60,9 +57,10 @@
 
             // Initialize Swiper
             this.swiper = new Swiper(el, {
-                initialSlide: this.direction === 'left' ? 0 : 1,
+                initialSlide: 0,
                 resistanceRatio: 0,
-                speed: 150
+                speed: 150,
+                loop: true
             })
         },
         methods: {
@@ -72,7 +70,7 @@
             async doDelete() {
                 await this.$store.commit('delete', this.content)
 
-                this.swiper.slideToLoop(this.id, 0)
+                this.swiper.slideTo(1, 0)
             }
         }
     }

@@ -7,6 +7,7 @@
         >
             <top-bar></top-bar>
             <list></list>
+            <storage></storage>
         </v-navigation-drawer>
 
         <v-content>
@@ -15,19 +16,13 @@
             <v-list
                     class="toolbar"
             >
-<!--                <v-list-item>-->
-                    <!--                    <v-btn-->
-                    <!--                            icon-->
-                    <!--                            :ripple="false"-->
-                    <!--                    >-->
-                    <!--                        <v-icon>mdi-pencil</v-icon>-->
-                    <!--                    </v-btn>-->
-<!--                </v-list-item>-->
                 <v-list-item>
                     <v-btn
                             icon
                             @click.stop="drawer = !drawer"
                             :ripple="false"
+                            v-shortkey="['meta', 'l']"
+                            @shortkey.native="drawer = !drawer"
                             tile
                     >
                         <v-icon>mdi-code-equal</v-icon>
@@ -42,7 +37,10 @@
     export default {
         data: () => ({
             drawer: true,
-        })
+        }),
+        created() {
+            this.$store.commit('loadLocalStorage')
+        }
     };
 </script>
 

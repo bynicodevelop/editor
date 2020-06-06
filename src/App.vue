@@ -3,7 +3,7 @@
         <editor
                 v-model="content"
                 :configs="config"
-                :key="markdownEditor"
+                :key="$store.state.refresh"
         />
     </default>
 </template>
@@ -21,10 +21,6 @@
             },
             content: {
                 get() {
-                    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-                    if(this.$store.state.content.text === "" || this.$store.state.changedSelection) this.markdownEditor += 1
-
-                    this.$store.commit('changedSelectionToggle')
                     return this.$store.state.content.text
                 },
                 set(value) {
@@ -36,31 +32,38 @@
 </script>
 
 <style lang="sass">
-    $min-height: 70px
-
-    .vue-simplemde
-        width: 100%
+    @mixin middle-align-flex
         height: 100%
         align-items: center
         display: flex
         flex-wrap: wrap
 
+    $min-height: 200px
+
+    .vue-simplemde
+        @include middle-align-flex
+        width: 100%
+
         .CodeMirror
+            width: 100%
+            height: 100%
             position: relative
             margin: 0 auto
-            border-width: 0
-            min-height: $min-height
-            flex: 1 1 100%
+            border-width: 0 !important
             max-width: 630px
 
-        .CodeMirror-vscrollbar
-            right: 0
-            top: 0
-            overflow-x: hidden
-            overflow-y: hidden
+            .cm-header-1
+                line-height: 150% !important
 
-        .CodeMirror-scroll
-            min-height: $min-height
-            overflow-y: hidden !important
-            overflow-x: hidden !important
+            .cm-header-2
+                line-height: 140% !important
+
+            .CodeMirror-sizer
+                @include middle-align-flex
+
+
+            .CodeMirror-scroll,
+            .CodeMirror-vscrollbar
+                overflow-y: hidden !important
+                overflow-x: hidden !important
 </style>
