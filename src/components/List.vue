@@ -10,7 +10,6 @@
                     v-for="(content, index) in filteredContent"
             >
                 <list-item
-                        direction="left"
                         :key="index"
                         :id="`${index}`"
                         :content="content"

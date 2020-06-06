@@ -75,6 +75,14 @@ export default new Vuex.Store({
         delete(state, value) {
             delete state.contents[value.id]
 
+            if(state.content.id === value.id) {
+                state.content = {
+                    text: ""
+                }
+            }
+
+            this.commit("refresh")
+
             this.commit('saveInLocalStorage')
             this.commit('filter', state.search)
         },

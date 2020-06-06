@@ -29,6 +29,7 @@
         methods: {
             doCreate() {
                 this.$store.commit('create', "# ")
+                this.$store.commit('refresh')
             },
         }
     }
