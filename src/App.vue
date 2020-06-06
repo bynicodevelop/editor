@@ -52,6 +52,12 @@
             border-width: 0 !important
             max-width: 630px
 
+            .cm-header-1
+                line-height: 150% !important
+
+            .cm-header-2
+                line-height: 140% !important
+
             .CodeMirror-sizer
                 @include middle-align-flex
 
