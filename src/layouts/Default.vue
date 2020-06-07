@@ -36,7 +36,7 @@
 <script>
     export default {
         data: () => ({
-            drawer: true,
+            drawer: false,
         }),
         created() {
             this.$store.commit('loadLocalStorage')
