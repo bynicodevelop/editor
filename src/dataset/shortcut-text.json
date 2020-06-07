@@ -1,0 +1,22 @@
+[
+    {
+        "text": "Comment X sans Y",
+        "value": "Génération d'un titre de base",
+        "content": "# Comment X sans Y"
+    },
+    {
+        "text": "Comment X avec Y",
+        "value": "Génération d'un titre de base",
+        "content": "# Comment X avec Y"
+    },
+    {
+        "text": "Nouvelle façon de faire X sans Y",
+        "value": "Génération d'un titre de base",
+        "content": "# Nouvelle façon de faire X sans Y"
+    },
+    {
+        "text": "Nouvelle façon de faire X",
+        "value": "Génération d'un titre de base",
+        "content": "# Nouvelle façon de faire X"
+    }
+]
