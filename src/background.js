@@ -14,12 +14,7 @@ let win
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
 
-const template = [ ]
-
 function createWindow () {
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
-
   // Create the browser window.
   win = new BrowserWindow({ width: 920, height: 600, webPreferences: {
     // Use pluginOptions.nodeIntegration, leave this alone
@@ -32,6 +27,11 @@ function createWindow () {
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
+    const template = [ ]
+
+    const menu = Menu.buildFromTemplate(template)
+    Menu.setApplicationMenu(menu)
+
     createProtocol('app')
     // Load the index.html when not in development
     win.loadURL('app://./index.html')

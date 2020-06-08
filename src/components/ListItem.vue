@@ -1,8 +1,10 @@
 <template>
+    <v-hover v-slot:default="{ hover }">
         <v-list-item-content
                 :id="id"
                 class="swiper-container"
                 @click="doSelect"
+                :class="{ 'grey lighten-5': hover, 'grey lighten-4' : contentSelected.id === content.id  }"
         >
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -19,20 +21,20 @@
                     <v-list-item-action
                             class="pl-5 pr-5 mt-2"
                     >
-                       <v-btn
-                       tile
-                       icon
-                       dark
-                       @click.stop="doDelete"
-                       >
-                           <v-icon>mdi-delete</v-icon>
-                       </v-btn>
+                        <v-btn
+                                tile
+                                icon
+                                dark
+                                @click.stop="doDelete"
+                        >
+                            <v-icon>mdi-delete</v-icon>
+                        </v-btn>
                     </v-list-item-action>
 
                 </div>
             </div>
         </v-list-item-content>
-
+    </v-hover>
 </template>
 
 <script>
@@ -63,6 +65,11 @@
                 loop: true
             })
         },
+        computed: {
+            contentSelected() {
+                return this.$store.state.content
+            },
+        },
         methods: {
             doSelect() {
                 this.$store.commit('select', this.content)
@@ -77,19 +84,21 @@
 </script>
 
 <style scoped lang="sass">
-.swiper-container
-    padding: 0
-    cursor: default
+    .swiper-container
+        padding: 0
+        cursor: default
+        transition: background-color .4s ease-in-out
 
-    >:active
-        cursor: grab
+        > :active
+            cursor: grab
 
-    .swiper-wrapper
-        display: flex
+        .swiper-wrapper
+            display: flex
 
-        .swiper-slide
-            padding: 15px 10px 8px 10px
+            .swiper-slide
+                padding: 15px 10px 8px 10px
 
-            .v-list-item__title
-                margin-bottom: 8px
+                .v-list-item__title
+                    margin-bottom: 8px
+
 </style>
