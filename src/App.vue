@@ -8,6 +8,7 @@
                 @initialized="doInitialize"
                 v-shortkey="['ctrl', 'space']"
                 @shortkey.native="show = !show"
+                @input="Object.keys(replaceChar).forEach(cb => replaceChar[cb](codemirror))"
         />
         <autocomplete
          v-show="show"
@@ -18,10 +19,37 @@
 
 <script>
     import Autocomplete from "./components/Autocomplete";
+
     export default {
         data: () => ({
             codemirror: null,
-            show: false
+            show: false,
+            replaceChar: {
+                quote: (cm) => {
+                    const openQuote = "« "
+                    const closeQuote = " »"
+
+                    const doc = cm.getDoc()
+                    const cursor = doc.getCursor()
+
+                    const currentChar = doc.getLine(cursor.line).substr(cursor.ch - 1, cursor.ch)
+                    const previousChar = doc.getLine(cursor.line).substr(cursor.ch - 2, 1)
+
+                    if (currentChar === '"') {
+                        if (previousChar === ' ') {
+                            doc.replaceRange(openQuote, {line: cursor.line, ch: cursor.ch - 1}, {
+                                line: cursor.line,
+                                ch: cursor.ch
+                            })
+                        } else {
+                            doc.replaceRange(closeQuote, {line: cursor.line, ch: cursor.ch - 1}, {
+                                line: cursor.line,
+                                ch: cursor.ch
+                            })
+                        }
+                    }
+                }
+            }
         }),
         components: {
             'autocomplete': Autocomplete
@@ -55,6 +83,9 @@
 
                 doc.replaceRange(value.content, cursor)
                 this.codemirror.focus()
+            },
+            doCheckedContent() {
+
             }
         }
     };
