@@ -22,6 +22,7 @@ export default new Vuex.Store({
         contents: {},
         filteredContent: [],
         content: {
+            id: "",
             text: ""
         },
         config: {

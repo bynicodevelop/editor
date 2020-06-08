@@ -4,15 +4,28 @@
                 v-model="content"
                 :configs="config"
                 :key="$store.state.refresh"
+                ref="editor"
+                @initialized="doInitialize"
+                v-shortkey="['ctrl', 'space']"
+                @shortkey.native="show = !show"
+        />
+        <autocomplete
+         v-show="show"
+         @selected="doAutocomplete"
         />
     </default>
 </template>
 
 <script>
+    import Autocomplete from "./components/Autocomplete";
     export default {
         data: () => ({
-            markdownEditor: 0
+            codemirror: null,
+            show: false
         }),
+        components: {
+            'autocomplete': Autocomplete
+        },
         computed: {
             config: {
                 get() {
@@ -26,6 +39,22 @@
                 set(value) {
                     this.$store.commit('update', value)
                 }
+            }
+        },
+        methods: {
+            doInitialize(el) {
+                this.codemirror = el.codemirror
+            },
+            doAutocomplete(value) {
+                if(value==='') return
+
+                this.show = !this.show
+
+                const doc = this.codemirror.getDoc()
+                const cursor = doc.getCursor()
+
+                doc.replaceRange(value.content, cursor)
+                this.codemirror.focus()
             }
         }
     };
