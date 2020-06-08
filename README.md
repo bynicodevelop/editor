@@ -28,3 +28,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 Vue Simple MDE : https://github.com/sparksuite/simplemde-markdown-editor
 
 Swiper : https://swiperjs.com/
+
+Vue Shortkey : https://www.npmjs.com/package/vue-shortkey

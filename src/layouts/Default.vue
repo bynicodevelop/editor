@@ -21,6 +21,8 @@
                             icon
                             @click.stop="drawer = !drawer"
                             :ripple="false"
+                            v-shortkey="['meta', 'l']"
+                            @shortkey.native="drawer = !drawer"
                             tile
                     >
                         <v-icon>mdi-code-equal</v-icon>
@@ -34,7 +36,7 @@
 <script>
     export default {
         data: () => ({
-            drawer: true,
+            drawer: false,
         }),
         created() {
             this.$store.commit('loadLocalStorage')

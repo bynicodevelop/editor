@@ -6,6 +6,8 @@
                 dense
                 hide-details
                 append-outer-icon="mdi-pencil-box-outline"
+                v-shortkey="['meta', 'n']"
+                @shortkey.native="doCreate"
                 @click:append-outer="doCreate"
                 clearable
         ></v-text-field>
