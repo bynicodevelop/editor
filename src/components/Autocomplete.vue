@@ -26,18 +26,22 @@
 </template>
 
 <script>
-    import ShortcutText from '../dataset/shortcut-text'
-
     export default {
         name: "autocomplete",
         data: () => ({
             model: '',
             search: '',
-            items: ShortcutText,
             filteredItems: []
         }),
-        created() {
+        mounted() {
             this.filteredItems = this.items
+        },
+        computed: {
+            items: {
+                get() {
+                    return this.$store.state.shortcuts
+                },
+            }
         },
         watch: {
             model(val) {

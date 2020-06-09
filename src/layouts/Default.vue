@@ -17,6 +17,52 @@
                     class="toolbar"
             >
                 <v-list-item>
+                    <v-menu
+                            v-model="menu"
+                            :close-on-content-click="false"
+                            :nudge-width="200"
+                            offset-y
+                            top
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                    icon
+                                    :ripple="false"
+                                    v-on="on"
+                                    tile
+                            >
+                                <v-icon>mdi-account-outline</v-icon>
+                            </v-btn>
+                        </template>
+
+                        <v-card>
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-avatar>
+                                        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+                                    </v-list-item-avatar>
+
+                                    <v-list-item-content>
+                                        <v-list-item-title>John Leider</v-list-item-title>
+                                    </v-list-item-content>
+
+                                </v-list-item>
+                            </v-list>
+
+                            <v-divider></v-divider>
+
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-action>
+                                        <v-switch v-model="displayPin" color="purple"></v-switch>
+                                    </v-list-item-action>
+                                    <v-list-item-title>Afficher les raccourcis</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                        </v-card>
+                    </v-menu>
+                </v-list-item>
+                <v-list-item>
                     <v-btn
                             icon
                             @click.stop="drawer = !drawer"
@@ -36,10 +82,22 @@
 <script>
     export default {
         data: () => ({
+            menu: false,
             drawer: false,
         }),
         created() {
-            this.$store.commit('loadLocalStorage')
+            this.$store.commit('setContents')
+            this.$store.commit('setDisplayPin')
+        },
+        computed: {
+            displayPin: {
+                get() {
+                    return this.$store.state.displayPin
+                },
+                set(value) {
+                    this.$store.commit('toggleDisplayPin', value)
+                }
+            }
         }
     };
 </script>
