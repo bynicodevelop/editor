@@ -83,9 +83,6 @@
 
                 doc.replaceRange(value.content, cursor)
                 this.codemirror.focus()
-            },
-            doCheckedContent() {
-
             }
         }
     };

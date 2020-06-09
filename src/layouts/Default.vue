@@ -17,6 +17,46 @@
                     class="toolbar"
             >
                 <v-list-item>
+
+                    <v-menu
+                            v-model="menu"
+                            :close-on-content-click="false"
+                            :nudge-width="200"
+                            offset-y
+                            top
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                    icon
+                                    :ripple="false"
+                                    v-on="on"
+                                    tile
+                            >
+                                <v-tooltip
+                                        left
+
+                                >
+                                    <template v-slot:activator="{ on }">
+                                        <v-icon v-on="on">mdi-account-outline</v-icon>
+                                    </template>
+                                    <span>Configurations</span>
+                                </v-tooltip>
+                            </v-btn>
+                        </template>
+
+                        <v-card>
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-action>
+                                        <v-switch v-model="displayPin" color="purple"></v-switch>
+                                    </v-list-item-action>
+                                    <v-list-item-title>Afficher les raccourcis</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                        </v-card>
+                    </v-menu>
+                </v-list-item>
+                <v-list-item>
                     <v-btn
                             icon
                             @click.stop="drawer = !drawer"
@@ -25,7 +65,14 @@
                             @shortkey.native="drawer = !drawer"
                             tile
                     >
-                        <v-icon>mdi-code-equal</v-icon>
+                        <v-tooltip
+                                left
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-icon v-on="on">mdi-code-equal</v-icon>
+                            </template>
+                            <span>Afficher la liste des contenus</span>
+                        </v-tooltip>
                     </v-btn>
                 </v-list-item>
             </v-list>
@@ -36,10 +83,22 @@
 <script>
     export default {
         data: () => ({
+            menu: false,
             drawer: false,
         }),
         created() {
-            this.$store.commit('loadLocalStorage')
+            this.$store.commit('setContents')
+            this.$store.commit('setDisplayPin')
+        },
+        computed: {
+            displayPin: {
+                get() {
+                    return this.$store.state.displayPin
+                },
+                set(value) {
+                    this.$store.commit('toggleDisplayPin', value)
+                }
+            }
         }
     };
 </script>

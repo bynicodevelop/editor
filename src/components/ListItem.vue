@@ -19,7 +19,7 @@
                 </div>
                 <div class="swiper-slide red darken-1">
                     <v-list-item-action
-                            class="pl-5 pr-5 mt-2"
+                            class="pl-5 mt-2 mr-0"
                     >
                         <v-btn
                                 tile
@@ -29,8 +29,23 @@
                         >
                             <v-icon>mdi-delete</v-icon>
                         </v-btn>
+
                     </v-list-item-action>
 
+                    <v-list-item-action
+                            class="mt-2"
+                    >
+                        <v-btn
+                                tile
+                                icon
+                                dark
+                                @click.stop="doPin"
+                        >
+                            <v-icon v-if="!content.pin">mdi-pin</v-icon>
+                            <v-icon v-else>mdi-pin-off</v-icon>
+                        </v-btn>
+
+                    </v-list-item-action>
                 </div>
             </div>
         </v-list-item-content>
@@ -76,6 +91,13 @@
             },
             async doDelete() {
                 await this.$store.commit('delete', this.content)
+
+                this.swiper.slideTo(1, 0)
+            },
+            doPin() {
+                this.content.pin = !this.content.pin
+
+                this.$store.commit('toggleToShortcut', this.content)
 
                 this.swiper.slideTo(1, 0)
             }
