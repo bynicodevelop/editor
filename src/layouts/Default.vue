@@ -38,21 +38,6 @@
                         <v-card>
                             <v-list>
                                 <v-list-item>
-                                    <v-list-item-avatar>
-                                        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
-                                    </v-list-item-avatar>
-
-                                    <v-list-item-content>
-                                        <v-list-item-title>John Leider</v-list-item-title>
-                                    </v-list-item-content>
-
-                                </v-list-item>
-                            </v-list>
-
-                            <v-divider></v-divider>
-
-                            <v-list>
-                                <v-list-item>
                                     <v-list-item-action>
                                         <v-switch v-model="displayPin" color="purple"></v-switch>
                                     </v-list-item-action>
