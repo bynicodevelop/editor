@@ -16,6 +16,7 @@ const getLastId = (contents) => {
 
 export default new Vuex.Store({
     state: {
+        selected: false,
         refresh: 0,
         localstorageSize: 0,
         search: "",
@@ -41,6 +42,7 @@ export default new Vuex.Store({
             state.refresh += 1
         },
         select: function (state, value) {
+            state.selected = true
             state.content = value
             this.commit("refresh")
         },
@@ -48,6 +50,7 @@ export default new Vuex.Store({
             const newId = getLastId(state.contents) + 1
 
             state.content = {
+                date: Date.now(),
                 id: newId.toString(),
                 text: value
             }
@@ -60,7 +63,11 @@ export default new Vuex.Store({
             if(state.content.text === "" && value !== "# ") {
                 this.commit("create", value)
             } else if(value !== "") {
+                if(state.selected === false) state.content.date = Date.now()
+
                 state.content.text = value
+
+                state.selected = false
             }
 
             this.commit('saveInLocalStorage')
@@ -71,13 +78,14 @@ export default new Vuex.Store({
         filter(state) {
             state.filteredContent = Object.values(state.contents).filter(el => {
                 return el.text !== undefined ? el.text.toLowerCase().includes(state.search.toLowerCase()) : false
-            })
+            }).sort((a, b) => b.date - a.date)
         },
         delete(state, value) {
             delete state.contents[value.id]
 
             if(state.content.id === value.id) {
                 state.content = {
+                    id: "",
                     text: ""
                 }
             }
