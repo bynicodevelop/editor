@@ -17,6 +17,7 @@
                     class="toolbar"
             >
                 <v-list-item>
+
                     <v-menu
                             v-model="menu"
                             :close-on-content-click="false"
@@ -31,7 +32,15 @@
                                     v-on="on"
                                     tile
                             >
-                                <v-icon>mdi-account-outline</v-icon>
+                                <v-tooltip
+                                        left
+
+                                >
+                                    <template v-slot:activator="{ on }">
+                                        <v-icon v-on="on">mdi-account-outline</v-icon>
+                                    </template>
+                                    <span>Configurations</span>
+                                </v-tooltip>
                             </v-btn>
                         </template>
 
@@ -71,7 +80,14 @@
                             @shortkey.native="drawer = !drawer"
                             tile
                     >
-                        <v-icon>mdi-code-equal</v-icon>
+                        <v-tooltip
+                                left
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-icon v-on="on">mdi-code-equal</v-icon>
+                            </template>
+                            <span>Afficher la liste des contenus</span>
+                        </v-tooltip>
                     </v-btn>
                 </v-list-item>
             </v-list>
