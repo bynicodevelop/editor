@@ -16,6 +16,7 @@ const getLastId = (contents) => {
 
 export default new Vuex.Store({
     state: {
+        codemirror: null,
         shortcuts: [],
         displayPin: false,
         darkMode: false,

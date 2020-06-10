@@ -8,7 +8,7 @@
                 @initialized="doInitialize"
                 v-shortkey="['ctrl', 'space']"
                 @shortkey.native="show = !show"
-                @input="Object.keys(replaceChar).forEach(cb => replaceChar[cb](codemirror))"
+                @input="Object.keys(replaceChar).forEach(cb => replaceChar[cb]($store.state.codemirror))"
         />
         <autocomplete
          v-show="show"
@@ -22,7 +22,6 @@
 
     export default {
         data: () => ({
-            codemirror: null,
             show: false,
             replaceChar: {
                 quote: (cm) => {
@@ -71,18 +70,18 @@
         },
         methods: {
             doInitialize(el) {
-                this.codemirror = el.codemirror
+                this.$store.state.codemirror = el.codemirror
             },
             doAutocomplete(value) {
                 if(value==='') return
 
                 this.show = !this.show
 
-                const doc = this.codemirror.getDoc()
+                const doc = this.$store.state.codemirror.getDoc()
                 const cursor = doc.getCursor()
 
                 doc.replaceRange(value.content, cursor)
-                this.codemirror.focus()
+                this.$store.state.codemirror.focus()
             }
         }
     };

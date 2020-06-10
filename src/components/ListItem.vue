@@ -27,7 +27,14 @@
                                 dark
                                 @click.stop="doDelete"
                         >
-                            <v-icon>mdi-delete</v-icon>
+                            <v-tooltip
+                                    top
+                            >
+                                <template v-slot:activator="{ on }">
+                                    <v-icon v-on="on">mdi-delete</v-icon>
+                                </template>
+                                <span>Supprimer</span>
+                            </v-tooltip>
                         </v-btn>
 
                     </v-list-item-action>
@@ -41,8 +48,15 @@
                                 dark
                                 @click.stop="doPin"
                         >
-                            <v-icon v-if="!content.pin">mdi-pin</v-icon>
-                            <v-icon v-else>mdi-pin-off</v-icon>
+                            <v-tooltip
+                                    top
+                            >
+                                <template v-slot:activator="{ on }">
+                                    <v-icon v-if="!content.pin" v-on="on">mdi-pin</v-icon>
+                                    <v-icon v-else>mdi-pin-off</v-icon>
+                                </template>
+                                <span>Créer un raccourci</span>
+                            </v-tooltip>
                         </v-btn>
 
                     </v-list-item-action>
@@ -119,6 +133,10 @@
 
             .swiper-slide
                 padding: 15px 10px 8px 10px
+
+                &.swiper-slide-active
+                    .v-icon
+                        color: #FFF !important
 
                 .v-list-item__title
                     margin-bottom: 8px
