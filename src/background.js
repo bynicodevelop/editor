@@ -1,10 +1,12 @@
 'use strict'
+/* global __static */
 
 import { app, protocol, BrowserWindow, Menu } from 'electron'
 import {
   createProtocol,
   /* installVueDevtools */
 } from 'vue-cli-plugin-electron-builder/lib'
+import path from 'path'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -16,11 +18,11 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 920, height: 600, webPreferences: {
+  win = new BrowserWindow({ width: 920, height: 600, icon: path.join(__static, 'icon.png'), webPreferences: {
     // Use pluginOptions.nodeIntegration, leave this alone
     // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
     nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
-  } })
+  }})
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
