@@ -92,7 +92,7 @@
     export default {
         data: () => ({
             menu: false,
-            drawer: true,
+            drawer: false,
         }),
         created() {
             this.$store.commit('setContents')
