@@ -18,6 +18,7 @@ export default new Vuex.Store({
     state: {
         shortcuts: [],
         displayPin: false,
+        darkMode: false,
         selected: false,
         refresh: 0,
         localstorageSize: 0,
@@ -134,6 +135,11 @@ export default new Vuex.Store({
 
             this.commit('saveDisplayPin')
         },
+        toggleDarkMode(state, value) {
+            state.darkMode = value
+
+            this.commit('saveDarkMode')
+        },
         // LocalStorage
         calculateLocalStorageSize(state) {
             let total = 0,
@@ -166,6 +172,12 @@ export default new Vuex.Store({
         },
         saveDisplayPin(state) {
             localStorage.setItem('displayPin', JSON.stringify(state.displayPin))
+        },
+        setDarkMode(state) {
+            state.darkMode = localStorage.getItem('darkMode') === 'true'
+        },
+        saveDarkMode(state) {
+            localStorage.setItem('darkMode', JSON.stringify(state.darkMode))
         }
     },
     actions: {},

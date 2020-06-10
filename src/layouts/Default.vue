@@ -97,14 +97,18 @@
         created() {
             this.$store.commit('setContents')
             this.$store.commit('setDisplayPin')
+            this.$store.commit('setDarkMode')
         },
         computed: {
             darkMode: {
                 get() {
+                    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+                    this.$vuetify.theme.dark = this.$store.state.darkMode
+
                     return this.$vuetify.theme.dark
                 },
                 set(value) {
-                    this.$vuetify.theme.dark = value
+                    this.$store.commit('toggleDarkMode', value)
                 }
             },
             displayPin: {
