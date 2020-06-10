@@ -118,7 +118,6 @@
             .CodeMirror-sizer
                 @include middle-align-flex
 
-
             .CodeMirror-scroll,
             .CodeMirror-vscrollbar
                 overflow-y: hidden !important
