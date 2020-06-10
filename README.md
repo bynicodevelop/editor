@@ -1,29 +1,32 @@
 # xedidor
 
-## Project setup
+### Installation
+
 ```
-npm install
+git clone git@github.com:bynicodevelop/editor.git
+
+cd editor
+
+npm i
 ```
 
-### Compiles and hot-reloads for development
+### Démarrage en developpement
+
 ```
-npm run serve
+npm run electron:serve
 ```
 
-### Compiles and minifies for production
+### Build pour la prod
+
 ```
-npm run build
+npm run electron:generate-icons
+
+npm run electron:build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+Les fichiers d'installation se trouvent dans `dist_electron`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-### Documentations
+### Dépendences & Documentations
 
 Vue Simple MDE : https://github.com/sparksuite/simplemde-markdown-editor
 

@@ -11,7 +11,6 @@
                     autofocus
                     append-icon=""
                     return-object
-                    light
             >
                 <template v-slot:item="{ item }">
                     <v-list-item-content>

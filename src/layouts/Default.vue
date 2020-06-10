@@ -19,7 +19,6 @@
                     class="toolbar"
             >
                 <v-list-item>
-
                     <v-menu
                             v-model="menu"
                             :close-on-content-click="false"
