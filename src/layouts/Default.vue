@@ -1,5 +1,7 @@
 <template>
-    <v-app>
+    <v-app
+        dark
+    >
         <v-navigation-drawer
                 v-model="drawer"
                 app
@@ -48,6 +50,12 @@
                             <v-list>
                                 <v-list-item>
                                     <v-list-item-action>
+                                        <v-switch v-model="darkMode" color="purple"></v-switch>
+                                    </v-list-item-action>
+                                    <v-list-item-title>Mode sombre</v-list-item-title>
+                                </v-list-item>
+                                <v-list-item>
+                                    <v-list-item-action>
                                         <v-switch v-model="displayPin" color="purple"></v-switch>
                                     </v-list-item-action>
                                     <v-list-item-title>Afficher les raccourcis</v-list-item-title>
@@ -84,13 +92,21 @@
     export default {
         data: () => ({
             menu: false,
-            drawer: false,
+            drawer: true,
         }),
         created() {
             this.$store.commit('setContents')
             this.$store.commit('setDisplayPin')
         },
         computed: {
+            darkMode: {
+                get() {
+                    return this.$vuetify.theme.dark
+                },
+                set(value) {
+                    this.$vuetify.theme.dark = value
+                }
+            },
             displayPin: {
                 get() {
                     return this.$store.state.displayPin
@@ -108,6 +124,39 @@
 </style>
 
 <style lang="sass">
+    $textcolor: #afafaf !important
+
+    .theme--dark
+        color: $textcolor
+
+        &.v-application
+            background: inherit
+
+            .CodeMirror,
+            .v-sheet
+                background-color: inherit !important
+
+            .grey
+                &.lighten-5
+                    background-color: #373737 !important
+                    border-color: #373737 !important
+
+                &.lighten-4
+                    background-color: #444444 !important
+                    border-color: #444444 !important
+
+        &.v-navigation-drawer
+            .v-divider
+                border-color: #393939 !important
+
+        .CodeMirror-placeholder,
+        .CodeMirror-line,
+        .v-list-item__title
+            color: $textcolor
+
+        .v-icon
+            color: #484848 !important
+
     .toolbar
         z-index: 1000
         position: fixed
