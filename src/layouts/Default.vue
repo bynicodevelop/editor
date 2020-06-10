@@ -134,7 +134,7 @@
         color: $textcolor
 
         &.v-application
-            background: inherit
+            background: #212121
 
             .CodeMirror,
             .v-sheet
@@ -152,6 +152,13 @@
         &.v-navigation-drawer
             .v-divider
                 border-color: #393939 !important
+
+
+        .CodeMirror-cursor
+            border-left: 1px solid $textcolor
+
+        .CodeMirror-selected
+            background-color: #2f2f2f !important
 
         .CodeMirror-placeholder,
         .CodeMirror-line,
