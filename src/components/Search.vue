@@ -36,18 +36,6 @@
             search: '',
             filteredItems: []
         }),
-        computed: {
-            contents: {
-                get() {
-                    return Object.keys(this.$store.state.contents).map(i => this.$store.state.contents[i])
-                }
-            },
-            shortcuts: {
-                get() {
-                    return this.$store.state.shortcuts
-                }
-            }
-        },
         methods: {
            click(e) {
                if(e.target.classList.value !== '') {
@@ -70,7 +58,7 @@
             search(val) {
                 let searchString = val
                 this.value = 'text'
-                let values = this.contents
+                let values = Object.keys(this.$store.state.contents).map(i => this.$store.state.contents[i])
 
                 if (searchString === '' || searchString === null) {
                     this.filteredItems = values
@@ -81,7 +69,7 @@
                     this.value = 'value'
 
                     searchString = val.substr(1, val.length)
-                    values = this.shortcuts
+                    values = this.$store.state.shortcuts
                 }
 
                 this.filteredItems = values.filter(d => d.text.toLowerCase().includes(searchString.toLowerCase()))

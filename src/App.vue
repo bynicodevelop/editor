@@ -1,14 +1,11 @@
 <template>
-    <default
-            v-shortkey="['esc']"
-            @shortkey.native="show = false"
-    >
+    <default>
         <search
                 v-shortkey="['meta', 'r']"
                 @shortkey.native="show = !show"
                 v-show="show"
                 @selected="doAutocomplete"
-                @close="show = false"
+                @close="show = !show"
         />
         <editor
                 v-model="content"
@@ -27,7 +24,6 @@
 
     export default {
         data: () => ({
-            showSearch: false,
             show: false,
             replaceChar: {
                 quote: (cm) => {
