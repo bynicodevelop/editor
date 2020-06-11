@@ -97,6 +97,7 @@
         position: fixed
         top: 0
         left: 0
+        max-width: inherit !important
 
         .v-autocomplete
             position: relative
