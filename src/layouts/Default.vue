@@ -129,8 +129,16 @@
 <style lang="sass">
     $textcolor: #afafaf !important
 
+    .toolbar
+        &.v-sheet
+            background-color: transparent
+
     .theme--dark
         color: $textcolor
+
+        .v-input__slot,
+        .v-menu__content
+            background-color: #212121 !important
 
         &.v-application
             background: #212121
