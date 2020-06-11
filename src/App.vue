@@ -1,27 +1,33 @@
 <template>
-    <default>
+    <default
+            v-shortkey="['esc']"
+            @shortkey.native="show = false"
+    >
+        <search
+                v-shortkey="['meta', 'r']"
+                @shortkey.native="show = !show"
+                v-show="show"
+                @selected="doAutocomplete"
+                @close="show = false"
+        />
         <editor
                 v-model="content"
                 :configs="config"
                 :key="$store.state.refresh"
                 ref="editor"
                 @initialized="doInitialize"
-                v-shortkey="['ctrl', 'space']"
-                @shortkey.native="show = !show"
                 @input="Object.keys(replaceChar).forEach(cb => replaceChar[cb]($store.state.codemirror))"
         />
-        <autocomplete
-         v-show="show"
-         @selected="doAutocomplete"
-        />
+
     </default>
 </template>
 
 <script>
-    import Autocomplete from "./components/Autocomplete";
+    import Search from "./components/Search"
 
     export default {
         data: () => ({
+            showSearch: false,
             show: false,
             replaceChar: {
                 quote: (cm) => {
@@ -31,11 +37,11 @@
                     const doc = cm.getDoc()
                     const cursor = doc.getCursor()
 
-                    const currentChar = doc.getLine(cursor.line).substr(cursor.ch - 1, cursor.ch)
+                    const currentChar = doc.getLine(cursor.line).substr(cursor.ch - 1, 1)
                     const previousChar = doc.getLine(cursor.line).substr(cursor.ch - 2, 1)
 
                     if (currentChar === '"') {
-                        if (previousChar === ' ') {
+                        if (previousChar === ' ' || previousChar === '.') {
                             doc.replaceRange(openQuote, {line: cursor.line, ch: cursor.ch - 1}, {
                                 line: cursor.line,
                                 ch: cursor.ch
@@ -51,7 +57,7 @@
             }
         }),
         components: {
-            'autocomplete': Autocomplete
+            'search': Search,
         },
         computed: {
             config: {
@@ -73,15 +79,20 @@
                 this.$store.state.codemirror = el.codemirror
             },
             doAutocomplete(value) {
-                if(value==='') return
+                if(value.content==='') return
+
+                if(value.type === 'content') {
+                    this.$store.commit('select', value.content)
+                    this.$store.commit('update', value.content.text)
+                } else {
+                    const doc = this.$store.state.codemirror.getDoc()
+                    const cursor = doc.getCursor()
+
+                    doc.replaceRange(value.content.content, cursor)
+                    this.$store.state.codemirror.focus()
+                }
 
                 this.show = !this.show
-
-                const doc = this.$store.state.codemirror.getDoc()
-                const cursor = doc.getCursor()
-
-                doc.replaceRange(value.content, cursor)
-                this.$store.state.codemirror.focus()
             }
         }
     };
