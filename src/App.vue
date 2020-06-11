@@ -37,11 +37,11 @@
                     const doc = cm.getDoc()
                     const cursor = doc.getCursor()
 
-                    const currentChar = doc.getLine(cursor.line).substr(cursor.ch - 1, cursor.ch)
+                    const currentChar = doc.getLine(cursor.line).substr(cursor.ch - 1, 1)
                     const previousChar = doc.getLine(cursor.line).substr(cursor.ch - 2, 1)
 
                     if (currentChar === '"') {
-                        if (previousChar === ' ') {
+                        if (previousChar === ' ' || previousChar === '.') {
                             doc.replaceRange(openQuote, {line: cursor.line, ch: cursor.ch - 1}, {
                                 line: cursor.line,
                                 ch: cursor.ch
