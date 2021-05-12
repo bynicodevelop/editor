@@ -17,7 +17,7 @@
     "@ckeditor/ckeditor5-build-classic": "^19.0.2",
     "@ckeditor/ckeditor5-vue": "^1.0.1",
     "core-js": "^3.6.5",
-    "swiper": "^5.4.2",
+    "swiper": "^6.5.1",
     "vue": "^2.6.11",
     "vue-shortkey": "^3.1.7",
     "vue-simplemde": "^1.0.6",
